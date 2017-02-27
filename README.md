@@ -18,13 +18,12 @@ Forgetsy handles distributions with upto around 10<sup>6</sup> active categories
 
 It requires [redis](https://github.com/antirez/redis) to be running on localhost at the default port (6379).
 
-Installation
-------------
+## Installation
 
-Add this to your Gemfile:
+Add to Gemfile:
 
 ```ruby
-gem 'forgetsy', github: 'cavvia/forgetsy', branch: 'v0.2.7'
+gem "forgetsy", git: "https://github.com/abevoelker/forgetsy.git"
 ```
 
 Configuration
