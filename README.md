@@ -1,5 +1,6 @@
 Forgetsy
 =======
+[![Build Status](https://secure.travis-ci.org/abevoelker/forgetsy.png)](http://travis-ci.org/abevoelker/forgetsy)
 
 Forgetsy is a scalable trending library designed to track temporal trends in non-stationary categorical distributions. It uses [forget-table](https://github.com/bitly/forgettable/) style data structures which decay observations over time. Using a ratio of two such sets decaying over different lifetimes, it picks up on changes to recent dynamics in your observations, whilst forgetting historical data responsibly. The technique is closely related to exponential moving average (EMA) ratios used for detecting trends in financial data.
 
