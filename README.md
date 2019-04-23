@@ -23,7 +23,7 @@ It requires [redis](https://github.com/antirez/redis) to be running on localhost
 Add to Gemfile:
 
 ```ruby
-gem "forgetsy", git: "https://github.com/abevoelker/forgetsy.git"
+gem "forgetsy", github: "Yevhenii-Kushvid/forgetsy"
 ```
 
 ## Setup
