@@ -26,6 +26,11 @@ module Forgetsy
                              t: opts[:t] * Forgetsy::Delta::NORM_T_MULT,
                              date: secondary_date)
       end
+
+      if opts.key?(:cache)
+        Forgetsy.redis.set(cache_lifetime_key, opts[:cache])
+      end
+      @cache_lifetime = Forgetsy.redis.get(cache_lifetime_key)
     end
 
     # Factory method. Use this instead of direct
@@ -71,6 +76,13 @@ module Forgetsy
     #
     # @return Hash
     def fetch(opts = {})
+      if @cache_lifetime && Forgetsy.redis.get(cache_flag_key)
+        opts[:decay] = false
+        opts[:scrub] = false
+      else
+        Forgetsy.redis.set(cache_flag_key, true)
+        Forgetsy.redis.expire(cache_flag_key, @cache_lifetime.to_i)
+      end
 
       # do not delegate the limit to sets
       # as we want to apply the limit after norm.
@@ -132,6 +144,33 @@ module Forgetsy
     end
 
     private
+
+    def cache_flag
+      # if possible to get key then
+      #   return true
+      # if not possible then
+      #   create key
+      #   set expire
+      #   return false
+
+
+      if Forgetsy.redis.get(cache_flag_key)
+        return true
+      else
+        Forgetsy.redis.set(cache_flag_key, true)
+        Forgetsy.redis.expire(cache_flag_key, opts[:cache])
+
+        return false
+      end
+    end
+
+    def cache_flag_key
+      "#{Forgetsy::Set::METADATA_KEY}:#{primary_set_key}:#{Forgetsy::Set::CACHE_KEY}"
+    end
+
+    def cache_lifetime_key
+      "#{Forgetsy::Set::METADATA_KEY}:#{primary_set_key}:#{Forgetsy::Set::CACHE_LIFETIME_KEY}"
+    end
 
     def primary_set_key
       @name

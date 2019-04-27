@@ -7,9 +7,12 @@ module Forgetsy
     LAST_DECAYED_KEY = "_last_decay".freeze
     LIFETIME_KEY = "_t".freeze
     METADATA_KEY = "_forgetsy".freeze
+    
+    CACHE_KEY = "_cache".freeze
+    CACHE_LIFETIME_KEY = "#{CACHE_KEY}#{LIFETIME_KEY}".freeze
 
     # scrub keys scoring lower than this.
-    HIGH_PASS_FILTER = 0.0001
+    HIGH_PASS_FILTER = 0.001
 
     def initialize(name)
       @name = name
