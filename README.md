@@ -67,6 +67,12 @@ Take, for example, a social network in which users can follow each other. You wa
 ```ruby
 follows_delta = Forgetsy::Delta.create('user_follows', t: 1.week, replay: true)
 ```
+
+You also have ability to set cache time for `fetch` operation
+```ruby
+follows_delta = Forgetsy::Delta.create('user_follows', t: 1.week, replay: true, cache: 1.day)
+```
+
 The delta consists of two sets of counters indexed by category identifiers. In this example, the identifiers will be user ids. One set decays over the mean lifetime specified by _t_, and another set decays over double the lifetime.
 
 You can now add observations to the delta, in the form of follow events. Each time a user follows another, you increment the followed user id. We can also do this retrospectively, since we have passed the `replay` option to the factory method above:
